@@ -174,7 +174,7 @@ elseif ($action == "login") {
 			Password: <input type="text" name="password" id="pass1" /> <br/>
 			Password (again): <input type="text" id="pass2" onKeyUp="check_pass()"/>
 			<div id="pass_same" style="display:inline;">&nbsp;</div>
-			<input type="hidden" name="action" value="add_user" />
+			<input type="hidden" name="action" value="add_user" /> <br/>
 			<input type="Button" value="Go" onClick="validate()" />
 		</form>
 		</div>
