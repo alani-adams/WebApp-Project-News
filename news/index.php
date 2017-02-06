@@ -176,7 +176,7 @@ elseif ($action == "login") {
 	</head>
 	<body>
 
-		<h1>Welcome to I<3 NEWS!</h1>
+		<h1> Welcome to I<3 NEWS!</h1>
 		<h2>Please login or sign up to continue</h2>
 		<?php
 

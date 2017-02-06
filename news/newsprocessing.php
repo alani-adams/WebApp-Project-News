@@ -41,7 +41,14 @@ $sql = "INSERT INTO stories (id, title, date1, story, approved, submitted_by, ph
 if (!mysql_query($sql)) {
 	die('Error: ' . mysql_error());
 }
-
-echo "Thanks for submitting a story!";
 mysql_close();
 ?>
+
+<html>
+  <body>
+    <h1> Thanks for submitting a story! </h1>
+    <form method="LINK" action="news.php">
+      <input type="submit" value="Return to News">
+    </form>
+  </body>
+</html>
