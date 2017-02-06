@@ -50,7 +50,7 @@ INSERT INTO `stories` (`id`, `title`, `date1`, `story`, `approved`, `submitted_b
 			$sql = "SELECT id, title, date1, story, approved, submitted_by, photo FROM stories";
 
 			$result = mysql_query("select * from stories");;
-			$dir = 'C:/xampp/htdocs/news/uploads';
+			$dir = 'news/uploads';
 			if (mysql_num_rows($result) > 0) 
 			{
      			// output data of each row
