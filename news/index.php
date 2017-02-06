@@ -35,13 +35,9 @@ if ($link->connect_errno) {
 }
 
 /**************************
-
 *
-
 * Database interactions
-
 *
-
 ***************************/
 
 $loggedin = false;

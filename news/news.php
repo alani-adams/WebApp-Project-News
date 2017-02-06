@@ -57,9 +57,10 @@ INSERT INTO `stories` (`id`, `title`, `date1`, `story`, `approved`, `submitted_b
      			while($row = mysql_fetch_assoc($result)) {
      				if($row["approved"] == 1) {
          				echo "<br/>". "<br/>" . $row["title"]. "<br>" . "By " . $row["submitted_by"]. "<br>" . $row["date1"] . "<br>" . $row["story"] ."<br/>". "<br/>";
-     				}
-     				//output the picture with each story
+         			//output the picture with each story
      				echo '<img src="', $dir, '/', $row["photo"], '" alt="photo" />';
+     				}
+
 
      			}
 			} else {
