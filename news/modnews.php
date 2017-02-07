@@ -50,7 +50,7 @@ INSERT INTO `stories` (`id`, `title`, `date1`, `story`, `approved`, `submitted_b
 			$sql = "SELECT id, title, date1, story, approved, submitted_by, photo FROM stories";
 
 
-			$result = mysql_query("select * from stories");;
+			$result = mysql_query("select * from stories"); //we are aware that this will not work with large amounts of data, but it works for our project
 			$dir = '/news/uploads';
 			if (mysql_num_rows($result) > 0) 
 			{
