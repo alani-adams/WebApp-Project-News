@@ -1,4 +1,4 @@
-<html>
+
 
 <!-- /*
 
@@ -24,6 +24,10 @@ INSERT INTO `stories` (`id`, `title`, `date1`, `story`, `approved`, `submitted_b
 
 */
 -->
+<?php
+
+?>
+<html>
 	<head>
 		<title>I <3 News! </title>
 		<link href='css/login_style.css' type='text/css' rel='stylesheet' />
@@ -55,60 +59,95 @@ INSERT INTO `stories` (`id`, `title`, `date1`, `story`, `approved`, `submitted_b
 			if (mysql_num_rows($result) > 0) 
 			{
      			// output data of each row
-     			while($row = mysql_fetch_assoc($result)) {
-         			echo "<br/>". "<br/>" . $row["title"]. "<br>" . "By " . $row["submitted_by"]. "<br>" . $row["date1"] . "<br>" . $row["story"] ."<br/>". "<br/>";
-     				//output the picture with each story
-     				echo '<img src="', $dir, '/', $row["photo"], '" alt="photo" />';
+     			while($row = mysql_fetch_assoc($result)) 
+     			{
+         			if($row["approved"] == 0) { //publish story
+     				?>
+     				<table border="1">
+					<tr>
+						<td colspan="2"><?php echo $row["title"];?></td>
+					</tr>
+					</tr>
+					<tr>
+						<td colspan="2"><?php echo $row["story"];?></td>
+					</tr>
+					<tr>
+						<td colspan="2"><?php echo $row["date1"];?></td>
+					</tr>
+					<tr>
+						<td><?php echo $row["submitted_by"];?></td>
+					</tr>
+					<tr>
+						<td><?php echo '<img src="', $dir, '/', $row["photo"], '" alt="photo" />';?></td>		
+					</tr>
+					</table>
+							
+					<form method='post' action='modnews.php'>
+						<input type='hidden' name='action' value='publish_story' />
+						<input type='hidden' name='id' value='$id' />
+						<input type='submit' value='Publish' />
+					</form>
 
+					<?php
+					}
+					if($row["approved"] == 1) { //unpublish story
+     				?>
+     				<table border="1">
+					<tr>
+						<td colspan="2"><?php echo $row["title"];?></td>
+					</tr>
+					</tr>
+					<tr>
+						<td colspan="2"><?php echo $row["story"];?></td>
+					</tr>
+					<tr>
+						<td colspan="2"><?php echo $row["date1"];?></td>
+					</tr>
+					<tr>
+						<td><?php echo $row["submitted_by"];?></td>
+					</tr>
+					<tr>
+						<td><?php echo '<img src="', $dir, '/', $row["photo"], '" alt="photo" />';?></td>		
+					</tr>
+					</table>
 
-     			// Publish/unpublish buttons____also not complete
-				if($row["approved"] == 0)
-				{
-					echo "<form method='post' action='modnews.php'>
-							<input type='hidden' name='action' value='publish_story' />
-							<input type='hidden' name='id' value='$id' />
-							<input type='submit' value='Publish' />
-						   </form>";
-				}
-				elseif($row["approved"] == 1)
-				{
-					echo "<form method='post' action='modnews.php'>
-							<input type='hidden' name='action' value='unpublish_story' />
-							<input type='hidden' name='id' value= />
-							<input type='submit' value='Unpublish' />
-						   </form>";
-				}
+					<form method='post' action='modnews.php'>
+						<input type='hidden' name='action' value='publish_story' />
+						<input type='hidden' name='id' value='$id' />
+						<input type='submit' value='Unpublish' />
+					</form>
+					<?php
+						if($action == "publish_story")
+						{
+							$id = $row["id"];
+							//$id = htmlentities($link->real_escape_string($id));
 
+							$r = mysql_query("UPDATE stories SET approved='1' WHERE id='" . $id . "'");
+							if(!$r)
+								die ('Can\'t query users because: ' . mysql_error());
+							else
+								echo "Story Published";
+						}
+						elseif($action == "unpublish_story")
+						{	
+							$id = $row["id"];
+							//$id = htmlentities($link->real_escape_string($id));
+
+							$r = mysql_query("UPDATE stories SET approved='0' WHERE id='" . $id . "'");
+							if(!$r)
+								die ('Can\'t query users because: ' . mysql_error());
+							else
+								echo "Story Unpublished" . ;
+}
+
+     				}
      			}
-			} else {
-     			echo "There are no stories!";
-			}
+     		}
 
 // publish/unpublish functions____ not complete
-if($action == "publish_story")
-{
-	$id = $_POST["id"];
-	$id = htmlentities($link->real_escape_string($id));
 
-	$result = $link->query("UPDATE stories SET approved='1' WHERE id='" . $id . "'");
-	if(!$result)
-		die ('Can\'t query users because: ' . $link->error);
-	else
-		$message = "Story Published";
-}
-elseif($action == "unpublish_story")
-{
-	$id = $_POST["id"];
-	$id = htmlentities($link->real_escape_string($id));
-
-	$result = $link->query("UPDATE stories SET approved='0' WHERE id='" . $id . "'");
-	if(!$result)
-		die ('Can\'t query users because: ' . $link->error);
-	else
-		$message = "Story Unpublished";
-}
-
-		?>
+?>
+		
 
 		<h3>Submit a Story</h3>
 		<form method="post" action="newsProcessing.php" name="add_story" enctype="multipart/form-data">
